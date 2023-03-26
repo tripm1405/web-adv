@@ -1,0 +1,102 @@
+@use "base";
+@use "login";
+@use "forgot";
+@use "change-password";
+@use "register";
+@use "wallet";
+@use "history";
+@use "error";
+
+.progress-spinner {
+  display: none;
+  justify-content: center;
+  width: 100%;
+  top: 15px;
+  position: fixed;
+  .spinner-color {
+    color: #90e428 !important;
+  }
+}
+
+.label {
+  text-align: left;
+  font-size: 16px;
+}
+
+.input-square {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #666666;
+  display: block;
+  width: 100%;
+  height: 40px;
+  border-radius: 5px;
+}
+
+.notification {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  padding: 5px 10px;
+  max-width: 400px;
+  width: fit-content;
+  color: #856404;
+  background-color: #fff3cd;
+  border: 1px solid #ffeeba;
+  border-radius: 10px;
+  text-align: center;
+  @include base.mobile {
+    max-width: 300px;
+  }
+}
+
+.hidden {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 1s, opacity 1s linear;
+}
+
+.btn {
+  &-back {
+    border: none;
+    border-radius: 50%;
+    background-color: #fff;
+    height: 50px;
+    width: 50px;
+
+    &:hover {
+      background-color: lightcyan;
+    }
+  }
+
+  &-next {
+    font-size: 16px;
+    width: 100%;
+    height: 40px;
+    box-shadow: none;
+    background-color: #a365d9;
+    outline: 2px solid #a365d9;
+    color: #fff;
+
+    &:hover {
+      background-color: #fff;
+      color: #a365d9;
+    }
+  }
+}
+
+.modal-content {
+  border-radius: 15px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input::-webkit-calendar-picker-indicator {
+  display: none;
+}

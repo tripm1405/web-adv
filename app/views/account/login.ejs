@@ -1,0 +1,66 @@
+<div class="block-login show-alert">
+  <div class="progress-spinner">
+    <div class="spinner-border spinner-color" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+  <div class="container-login">
+    <div class="wrap-login">
+      <div class="login-pic">
+        <img class="login-logo" src="/img/favicon.ico" alt="IMG" />
+      </div>
+      <form
+        class="login-form validate-form"
+        id="form-login"
+        method="post"
+        enctype="multipart/form-data"
+      >
+        <span class="login-form-title"> DELTA LOGIN </span>
+        <div
+          class="wrap-input validate-input"
+          data-validate="Username required"
+        >
+          <input
+            class="input form-control"
+            id="username"
+            type="text"
+            placeholder="Username"
+          />
+          <span class="symbol-input">
+            <i class="fas fa-user" aria-hidden="true"></i>
+          </span>
+        </div>
+        <div
+          class="wrap-input validate-input"
+          data-validate="Password required"
+        >
+          <input
+            class="input form-control"
+            id="password"
+            type="password"
+            placeholder="Password"
+          />
+          <span class="symbol-input">
+            <i class="fa fa-lock" aria-hidden="true"></i>
+          </span>
+        </div>
+
+        <div class="container-login-form-btn">
+          <button type="submit" class="login-form-btn btn">Login</button>
+        </div>
+
+        <div class="text-center" style="padding-top: 12px">
+          <span class="txt1"> Forgot </span>
+          <a class="txt2" href="/forgot-password"> Username / Password? </a>
+        </div>
+
+        <div class="text-center" style="padding-top: 136px">
+          <a class="txt2" href="/register">
+            Create your Account
+            <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

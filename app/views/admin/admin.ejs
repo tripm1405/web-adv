@@ -1,0 +1,485 @@
+<div class="block-admin show-alert">
+  <div class="progress-spinner">
+    <div class="spinner-border spinner-color" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+  <div class="container wrap p-5">
+    <h3>TRANG QUẢN LÝ ADMIN</h3>
+    <div style="margin-bottom: 15px">
+      <a href="/logout">Đăng xuất</a>
+    </div>
+    <ul class="nav nav-tabs nav-fill">
+      <li class="nav-item">
+        <a class="nav-link active" data-bs-toggle="tab" href="#deal"
+          >Giao dịch</a
+        >
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-bs-toggle="tab" href="#user">Tài khoản</a>
+      </li>
+    </ul>
+
+    <div class="tab-content container wrap">
+      <div class="tab-pane active" id="deal">
+        <table class="table table-hover text-center" style="width: 100%">
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>Loại GD</th>
+              <th>Thời gian</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for (let deal of deals) { %>
+            <tr
+              class="gd-click"
+              style="cursor: pointer"
+              data-bs-toggle="modal"
+              data-bs-target="#gd-detail-modal"
+              _id="<%= deal._id %>"
+              username="<%= deal.username %>"
+              type="<%= deal.type %>"
+              receiver_phone_number="<%= deal.receiver_phone_number %>"
+              money="<%= deal.money %>"
+              message="<%= deal.message %>"
+              status="<%= deal.status %>"
+              date="<%= deal.date %>"
+            >
+              <td><%= deal.username %></td>
+              <td><%= deal.type %></td>
+              <td><%= new Date(deal.date).toLocaleString("vi-VN") %></td>
+            </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+      <div class="tab-pane" id="user">
+        <div class="row">
+          <div class="col-2">
+            <ul class="nav nav-pills nav-fill flex-column">
+              <li class="nav-item">
+                <a class="nav-link active" data-bs-toggle="tab" href="#act1"
+                  >Chờ xác minh</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#act2"
+                  >Đã xác minh</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#act3"
+                  >Đã vô hiệu hóa</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#act4"
+                  >Đang bị khóa</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="col-10">
+            <div class="tab-content">
+              <div class="tab-pane container active" id="act1">
+                <table class="table table-hover table-striped text-center">
+                  <thead>
+                    <tr>
+                      <th>Tài khoản</th>
+                      <th>Họ tên</th>
+                      <th>Trạng thái</th>
+                      <th>Ngày tạo</th>
+                      <th>Hành động</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% for (let user of userWait) { %>
+                    <tr>
+                      <td><%= user.username %></td>
+                      <td><%= user.name %></td>
+                      <td><%= user.status %></td>
+                      <td>
+                        <%= new Date(user.createdAt).toLocaleString("vi-VN") %>
+                      </td>
+                      <td>
+                        <button
+                          class="btn btn-primary btn-xac-minh"
+                          data-bs-toggle="modal"
+                          data-bs-target="#xac-minh-modal"
+                          user="<%= user.username %>"
+                        >
+                          Xác minh
+                        </button>
+                        <button
+                          class="btn btn-secondary btn-bo-sung"
+                          data-bs-toggle="modal"
+                          data-bs-target="#bo-sung-modal"
+                          user="<%= user.username %>"
+                        >
+                          Bổ sung
+                        </button>
+                        <button
+                          class="btn btn-danger btn-huy"
+                          data-bs-toggle="modal"
+                          data-bs-target="#huy-modal"
+                          user="<%= user.username %>"
+                        >
+                          Huỷ
+                        </button>
+                      </td>
+                    </tr>
+                    <% } %>
+                  </tbody>
+                </table>
+              </div>
+              <div class="tab-pane container fade" id="act2">
+                <table class="table table-hover table-striped text-center">
+                  <thead>
+                    <tr>
+                      <th>Tài khoản</th>
+                      <th>Họ tên</th>
+                      <th>Ngày tạo</th>
+                      <th>Hành động</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% for (let user of userAct) { %> <% if (user.username ==
+                    "admin") continue; %>
+                    <tr>
+                      <td><%= user.username %></td>
+                      <td><%= user.name %></td>
+                      <td>
+                        <%= new Date(user.createdAt).toLocaleString("vi-VN") %>
+                      </td>
+                      <td>
+                        <button
+                          class="btn btn-secondary btn-bo-sung"
+                          data-bs-toggle="modal"
+                          data-bs-target="#bo-sung-modal"
+                          user="<%= user.username %>"
+                        >
+                          Bổ sung
+                        </button>
+                        <button
+                          class="btn btn-danger btn-huy"
+                          data-bs-toggle="modal"
+                          data-bs-target="#huy-modal"
+                          user="<%= user.username %>"
+                        >
+                          Huỷ
+                        </button>
+                      </td>
+                    </tr>
+                    <% } %>
+                  </tbody>
+                </table>
+              </div>
+              <div class="tab-pane container fade" id="act3">
+                <table class="table table-hover table-striped text-center">
+                  <thead>
+                    <tr>
+                      <th>Tài khoản</th>
+                      <th>Họ tên</th>
+                      <th>Ngày tạo</th>
+                      <th>Hành động</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% for (let user of userDis) { %>
+                    <tr>
+                      <td><%= user.username %></td>
+                      <td><%= user.name %></td>
+                      <td>
+                        <%= new Date(user.createdAt).toLocaleString("vi-VN") %>
+                      </td>
+                      <td>
+                        <button
+                          class="btn btn-primary btn-mo-khoa"
+                          data-bs-toggle="modal"
+                          data-bs-target="#mo-khoa-modal"
+                          user="<%= user.username %>"
+                        >
+                          Mở khoá
+                        </button>
+                      </td>
+                    </tr>
+                    <% } %>
+                  </tbody>
+                </table>
+              </div>
+              <div class="tab-pane container fade" id="act4">
+                <table class="table table-hover table-striped text-center">
+                  <thead>
+                    <tr>
+                      <th>Tài khoản</th>
+                      <th>Họ tên</th>
+                      <th>Ngày tạo</th>
+                      <th>Hành động</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% for (let user of userLock) { %>
+                    <tr>
+                      <td><%= user.username %></td>
+                      <td><%= user.name %></td>
+                      <td>
+                        <%= new Date(user.createdAt).toLocaleString("vi-VN") %>
+                      </td>
+                      <td>
+                        <button
+                          class="btn btn-primary btn-mo-khoa"
+                          data-bs-toggle="modal"
+                          data-bs-target="#mo-khoa-modal"
+                          user="<%= user.username %>"
+                        >
+                          Mở khoá
+                        </button>
+                      </td>
+                    </tr>
+                    <% } %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Xac minh Modal -->
+  <div
+    class="modal fade"
+    id="xac-minh-modal"
+    tabindex="-1"
+    aria-labelledby="xac-minh-modal-label"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content container">
+        <div class="modal-header">
+          <h5 class="modal-title" id="xac-minh-modal-label">Xác minh</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <form id="form-xac-minh">
+          <input type="hidden" id="username" />
+          <div class="modal-body">
+            <p>
+              Bạn có chắc chắn muốn xác minh cho tài khoản
+              <strong id="user-xac-minh" style="color: red"></strong>
+            </p>
+          </div>
+          <div class="modal-footer d-flex justify-content-center">
+            <button
+              type="submit"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+            >
+              Đồng ý
+            </button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Không
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- Bo sung Modal -->
+  <div
+    class="modal fade"
+    id="bo-sung-modal"
+    tabindex="-1"
+    aria-labelledby="bo-sung-modal-label"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content container">
+        <div class="modal-header">
+          <h5 class="modal-title" id="bo-sung-modal-label">Bổ sung hồ sơ</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <form id="form-bo-sung">
+          <input type="hidden" id="username" />
+          <div class="modal-body">
+            <p>
+              Bạn có chắc chắn muốn yêu cầu bổ sung CMND tài khoản
+              <strong id="user-bo-sung" style="color: red"></strong>
+            </p>
+          </div>
+          <div class="modal-footer d-flex justify-content-center">
+            <button
+              type="submit"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+            >
+              Đồng ý
+            </button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Không
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- Huy Modal -->
+  <div
+    class="modal fade"
+    id="huy-modal"
+    tabindex="-1"
+    aria-labelledby="huy-modal-label"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content container">
+        <div class="modal-header">
+          <h5 class="modal-title" id="huy-modal-label">Vô hiệu hoá</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <form id="form-huy">
+          <input type="hidden" id="username" />
+          <div class="modal-body">
+            <p>
+              Bạn có chắc chắn muốn vô hiệu hoá tài khoản
+              <strong id="user-huy" style="color: red"></strong>
+            </p>
+          </div>
+          <div class="modal-footer d-flex justify-content-center">
+            <button
+              type="submit"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+            >
+              Đồng ý
+            </button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Không
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- Mo Khoa Modal -->
+  <div
+    class="modal fade"
+    id="mo-khoa-modal"
+    tabindex="-1"
+    aria-labelledby="mo-khoa-modal-label"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content container">
+        <div class="modal-header">
+          <h5 class="modal-title" id="mo-khoa-modal-label">Vô hiệu hoá</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <form id="form-mo-khoa">
+          <input type="hidden" id="username" />
+          <div class="modal-body">
+            <p>
+              Bạn có chắc chắn muốn mở khoá tài khoản
+              <strong id="user-mo-khoa" style="color: red"></strong>
+            </p>
+          </div>
+          <div class="modal-footer d-flex justify-content-center">
+            <button
+              type="submit"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+            >
+              Đồng ý
+            </button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Không
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- Thông tin giao dich Modal -->
+  <div
+    class="modal fade"
+    id="gd-detail-modal"
+    tabindex="-1"
+    aria-labelledby="gd-detail-modal-label"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content container">
+        <div class="modal-header">
+          <h5 class="modal-title" id="gd-detail-modal-label">
+            Chi tiết giao dịch
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <form id="form-gd-detail">
+          <div class="modal-body">
+            <div class="gd-body"></div>
+          </div>
+          <div class="modal-footer d-flex justify-content-center">
+            <button
+              type="button"
+              class="btn btn-primary"
+              id="btn-dong-y"
+              data-bs-dismiss="modal"
+            >
+              Đồng ý
+            </button>
+            <button
+              type="button"
+              class="btn btn-danger"
+              id="btn-tu-choi"
+              data-bs-dismiss="modal"
+            >
+              Từ chối
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

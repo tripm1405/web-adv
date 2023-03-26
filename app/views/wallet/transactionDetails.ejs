@@ -1,0 +1,39 @@
+<div class="container d-flex justify-content-center">
+    <div class="content p-5 m-3 bg-light border border-secondary rounded">
+        <% if (data.type === "Withdraw") { %>
+            <div class="form-group my-2">
+                <label>Card number:</label>
+                <p class="form-control" id="card_number" name="card_number"><%= data.message %></p>
+            </div>
+        <% } %>
+            <div class="form-group my-2">
+                <label>Type:</label>
+                <p class="form-control" id="status" name="status"><%= data.type%></p>
+            </div>
+            <div class="form-group my-2">
+                <label>Status:</label>
+                <p class="form-control" id="status" name="status"><%= data.status%></p>
+            </div>
+        <% if (data.receiver_phone_number) { %>
+            <div class="form-group my-2">
+                <label>Phone number:</label>
+                <p class="form-control" id="phone_number" name="phone_number"><%= data.receiver_phone_number %></p>
+            </div>
+        <% } %>
+            <div class="form-group my-2">
+                <label>Money:</label>
+                <p class="form-control" id="money" name="money"><%= new Intl.NumberFormat().format(data.money) %> &nbsp;đ</p>
+            </div>
+            <div class="form-group my-2">
+                <label>Date:</label>
+                <p class="form-control" id="date" name="date"><%= data.date %></p>
+            </div>
+        <% if (data.message) { %>
+            <div class="form-group my-2">
+                <label>Message:</label>
+                <p class="form-control" id="message" name="message"><%= data.message %></p>
+            </div>
+        <% } %>
+            <button id="back" class="btn btn-primary" class="btn btn-default">Back</button>
+    </div>
+</div>

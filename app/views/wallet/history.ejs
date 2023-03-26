@@ -1,0 +1,128 @@
+<div class="container-home">
+  <div class="block-home show-alert">
+    <div class="progress-spinner">
+      <div class="spinner-border spinner-color" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+    <div class="block-wallet-function">
+      <img class="logo" src="/img/logo.png" alt="Logo" width="70" />
+      <div class="function" id="home" href="/">
+        <i class="icon bi bi-house"></i>
+        <span class="mt-1">Home</span>
+      </div>
+      <div class="function" id="history" href="/history">
+        <i class="icon bi bi-clock-history"></i>
+        <span class="mt-1">History</span>
+      </div>
+      <div class="function" id="account" href="/account">
+        <i class="icon bi bi-person"></i>
+        <span class="mt-1">Account</span>
+      </div>
+      <i
+        class="logout bi bi-box-arrow-right"
+        onClick="window.location='/logout'"
+      ></i>
+    </div>
+    <div class="block-wallet-content">
+      <div class="wallet-content d-block w-100">
+        <div class="wallet">
+          <h3 class="mt-4 mb-3">Lịch sử giao dịch</h3>
+          <div style="flex: 1">
+            <div class="history d-flex flex-column h-100">
+              <div class="history-header d-flex text-center">
+                <div class="col-2"></div>
+                <div class="col-2">Loại giao dịch</div>
+                <div class="col-2">Số tiền</div>
+                <div class="col-4">Thời gian</div>
+                <div class="col-2">Trạng thái</div>
+              </div>
+              <div class="h-rule-bottom"></div>
+              <% if (data.length == 0) { %>
+              <div class="d-flex flex-column justify-content-center h-100">
+                <div class="mb-3" align="center">
+                  <img src="/img/empty.png" alt="Empty" width="200" />
+                </div>
+                <div class="text-center">Bạn chưa thực hiện giao dịch nào</div>
+              </div>
+              <% } %> <% data.forEach((element,index,array) => { %> <% if (index
+              >= 10) return; %>
+              <div class="history-data d-flex text-center py-2">
+                <div class="col-2">
+                  <% if (element.type === "Deposit") { %>
+                  <i
+                    class="text-center bi bi-download"
+                    style="font-size: 14pt"
+                  ></i>
+                  <% } %> <% if (element.type === "Withdraw") { %>
+                  <i
+                    class="text-center bi bi-upload"
+                    style="font-size: 14pt"
+                  ></i>
+                  <% } %> <% if (element.type === "Transfer") { %>
+                  <i
+                    class="text-center bi bi-arrow-left-right"
+                    style="font-size: 14pt"
+                  ></i>
+                  <% } %> <% if (element.type === "Buy Card") { %>
+                  <i
+                    class="text-center bi bi-card-heading"
+                    style="font-size: 14pt"
+                  ></i>
+                  <% } %>
+                </div>
+                <div class="col-2 type"><%= element.type %></div>
+                <div class="col-2 money">
+                  <%= element.money.toString().replace(/\B(?=(\d{3})+(?!\d))/g,
+                  "."); %>
+                </div>
+                <div class="message d-none"><%= element.message %></div>
+                <div class="col-4 time">
+                  <%= new Date(element.date).toLocaleString("vi-VN") %>
+                </div>
+                <div class="col-2 status"><%= element.status %></div>
+              </div>
+              <% }) %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<button
+  class="d-none"
+  id="history-detail"
+  data-bs-toggle="modal"
+  data-bs-target="#history-detail-modal"
+></button>
+<!-- history-detail modal -->
+<div
+  class="modal fade"
+  id="history-detail-modal"
+  tabindex="-1"
+  aria-labelledby="history-detail-modal-label"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="history-detail-modal-label">
+          Chi tiết giao dịch
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body history-detail-data"></div>
+      <div class="modal-footer d-flex justify-content-center">
+        <button class="btn btn-success" type="submit" data-bs-dismiss="modal">
+          Xác nhận
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,179 @@
+<div class="container-home">
+  <div class="block-home show-alert">
+    <div class="progress-spinner">
+      <div class="spinner-border spinner-color" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+    <div class="block-wallet-function">
+      <img class="logo" src="/img/logo.png" alt="Logo" width="70" />
+      <div class="function" id="home" href="/">
+        <i class="icon bi bi-house"></i>
+        <span class="mt-1">Home</span>
+      </div>
+      <div class="function" id="history" href="/history">
+        <i class="icon bi bi-clock-history"></i>
+        <span class="mt-1">History</span>
+      </div>
+      <div class="function" id="account" href="/account">
+        <i class="icon bi bi-person"></i>
+        <span class="mt-1">Account</span>
+      </div>
+      <i
+        class="logout bi bi-box-arrow-right"
+        onClick="window.location='/logout'"
+      ></i>
+    </div>
+    <div class="block-wallet-content flex-row">
+      <div class="col-4 p-5 ms-5 mt-5 d-flex flex-column align-items-center">
+        <img src="/img/avatar.png" alt="Avatar" width="200" />
+        <h4 class="mt-4"><%= user.name %></h4>
+        <span class="user-status" style="font-size: 14pt"
+          ><%= user.status %></span
+        >
+        <% if (user.status == "Chờ cập nhật") { %>
+        <button
+          class="btn btn-next mt-5 btn-cmnd"
+          type="button"
+          data-bs-toggle="modal"
+          data-bs-target="#bo-sung-modal"
+        >
+          Thay đổi CMND
+        </button>
+        <% } %>
+        <button
+          class="btn btn-next mt-5"
+          type="button"
+          onclick="window.location='/change-password'"
+        >
+          Đến trang đổi mât khẩu
+        </button>
+      </div>
+      <div class="col-8 p-5 ms-5 d-flex flex-column">
+        <h3 class="w-75 text-center mb-5">Thông tin tài khoản</h3>
+        <form class="w-75" id="form-account">
+          <div class="label mb-1">Số điện thoại</div>
+          <div class="wrap-input validate-input" data-validate="Phone required">
+            <input
+              class="form-control input-square"
+              id="phone"
+              type="number"
+              value="<%= user.phone %>"
+              readonly
+            />
+          </div>
+          <div>
+            <div class="label mb-1">Email</div>
+            <div
+              class="wrap-input validate-input"
+              data-validate="Email required"
+            >
+              <input
+                class="form-control input-square"
+                id="email"
+                type="text"
+                value="<%= user.email %>"
+                readonly
+              />
+            </div>
+          </div>
+          <div class="label mb-1">Họ và tên</div>
+          <div class="wrap-input validate-input" data-validate="Name required">
+            <input
+              class="form-control input-square"
+              id="name"
+              type="text"
+              value="<%= user.name %>"
+              readonly
+            />
+          </div>
+          <div>
+            <div class="label mb-1">Ngày sinh</div>
+            <div
+              class="wrap-input validate-input"
+              data-validate="Birthday required"
+            >
+              <input
+                class="form-control input-square"
+                id="birthday"
+                type="text"
+                value="<%= user.birthday %>"
+                onfocus="(this.type = 'date')"
+                onblur="if (!this.value) this.type = 'text'"
+                readonly
+              />
+            </div>
+          </div>
+          <div class="label mb-1">Địa chỉ</div>
+          <div
+            class="wrap-input validate-input"
+            data-validate="Address required"
+          >
+            <input
+              class="form-control input-square"
+              id="address"
+              type="text"
+              value="<%= user.address %>"
+              readonly
+            />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Bo Sung CMND Modal -->
+<div
+  class="modal fade"
+  id="bo-sung-modal"
+  tabindex="-1"
+  aria-labelledby="bo-sung-modal-label"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content container">
+      <div class="modal-header">
+        <h5 class="modal-title" id="bo-sung-modal-label">Bổ sung hồ sơ</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <form id="form-bo-sung">
+        <div class="modal-body">
+          <div class="row">
+            <div class="label mb-1">CMND mặt trước</div>
+            <div
+              class="wrap-input validate-input"
+              data-validate="Image required"
+            >
+              <input
+                class="form-control form-control-lg input-square"
+                id="cmnd_front"
+                type="file"
+              />
+            </div>
+            <div class="label mb-1">CMND mặt sau</div>
+            <div
+              class="wrap-input validate-input"
+              data-validate="Image required"
+            >
+              <input
+                class="form-control form-control-lg input-square"
+                id="cmnd_end"
+                type="file"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer d-flex justify-content-center">
+          <button type="submit" class="btn btn-success" data-bs-dismiss="modal">
+            Bổ sung
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
